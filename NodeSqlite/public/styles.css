@@ -1,118 +1,345 @@
-﻿:root {
-  --bg: #f4f6fb;
-  --card: #ffffff;
-  --text: #1f2937;
-  --muted: #6b7280;
-  --accent: #0f766e;
-  --accent-dark: #0b5a54;
-  --border: #d1d5db;
-  --danger: #b91c1c;
-  --ok: #166534;
+﻿/* ── Variables ────────────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
+
+:root {
+  --bg:          #0f1117;
+  --surface:     #181c27;
+  --surface-2:   #1f2436;
+  --border:      #2a3050;
+  --text:        #e8eaf6;
+  --muted:       #7c85a8;
+  --accent-a:    #5c7cfa;   /* artistes – blau */
+  --accent-al:   #99b2ff;
+  --accent-b:    #20c997;   /* àlbums   – verd */
+  --accent-bl:   #6de6c4;
+  --accent-s:    #f08c4b;   /* cançons  – taronja */
+  --accent-sl:   #ffc49b;
+  --danger:      #f25f5c;
+  --ok:          #40c057;
+  --radius:      14px;
+  --radius-sm:   8px;
+  --shadow:      0 8px 32px rgba(0,0,0,.45);
+  --font:        'DM Sans', sans-serif;
+  --mono:        'DM Mono', monospace;
 }
 
-* {
-  box-sizing: border-box;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-}
+/* ── Reset ────────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  margin: 0;
-  min-height: 100vh;
-  padding: 24px;
+  font-family: var(--font);
+  background: var(--bg);
   color: var(--text);
-  background: linear-gradient(135deg, #ecfeff, #eef2ff 55%, #f8fafc);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 20% -10%, rgba(92,124,250,.12), transparent),
+    radial-gradient(ellipse 60% 40% at 80% 110%, rgba(32,201,151,.08), transparent);
 }
 
-main {
-  max-width: 760px;
+/* ── Header ───────────────────────────────────────────────────────────────── */
+header {
+  border-bottom: 1px solid var(--border);
+  padding: 20px 32px;
+  background: rgba(24,28,39,.8);
+  backdrop-filter: blur(12px);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.header-inner {
+  max-width: 900px;
   margin: 0 auto;
-  display: grid;
+  display: flex;
+  align-items: center;
   gap: 16px;
 }
 
-.card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 16px;
-  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
+.logo { font-size: 2rem; }
+
+header h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -.02em;
+  color: var(--text);
 }
 
-h1,
-h2 {
-  margin: 0 0 10px;
-}
-
-p {
-  margin: 0;
+.subtitle {
+  font-family: var(--mono);
+  font-size: .75rem;
   color: var(--muted);
+  margin-top: 2px;
 }
 
-form,
-.row {
+/* ── Main ─────────────────────────────────────────────────────────────────── */
+main {
+  max-width: 900px;
+  margin: 32px auto;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  flex: 1;
+}
+
+/* ── Cards ────────────────────────────────────────────────────────────────── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.card-header h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -.01em;
+}
+
+.section-icon { font-size: 1.4rem; }
+
+/* Accents per secció */
+.card-header.artists { background: linear-gradient(90deg, rgba(92,124,250,.15), transparent); }
+.card-header.artists h2 { color: var(--accent-al); }
+
+.card-header.albums  { background: linear-gradient(90deg, rgba(32,201,151,.13), transparent); }
+.card-header.albums h2  { color: var(--accent-bl); }
+
+.card-header.songs   { background: linear-gradient(90deg, rgba(240,140,75,.13), transparent); }
+.card-header.songs h2   { color: var(--accent-sl); }
+
+/* ── Form block ──────────────────────────────────────────────────────────── */
+.form-block {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-2);
+}
+
+.form-block h3 {
+  font-size: .85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.inline-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+input[type="text"],
+select {
+  flex: 1;
+  min-width: 180px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  color: var(--text);
+  font-family: var(--font);
+  font-size: .9rem;
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+
+input[type="text"]:focus,
+select:focus {
+  border-color: var(--accent-a);
+  box-shadow: 0 0 0 3px rgba(92,124,250,.18);
+}
+
+select { cursor: pointer; }
+
+/* Accents de focus per cada secció */
+#sec-albums input:focus, #sec-albums select:focus {
+  border-color: var(--accent-b);
+  box-shadow: 0 0 0 3px rgba(32,201,151,.18);
+}
+#sec-songs input:focus, #sec-songs select:focus {
+  border-color: var(--accent-s);
+  box-shadow: 0 0 0 3px rgba(240,140,75,.18);
+}
+
+button {
+  padding: 10px 22px;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: var(--font);
+  font-size: .9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity .15s, transform .12s;
+}
+button:active { transform: scale(.97); }
+
+/* Botó principal per secció */
+#sec-artists button[type="submit"] { background: var(--accent-a); color: #fff; }
+#sec-albums  button[type="submit"] { background: var(--accent-b); color: #0f1117; }
+#sec-songs   button[type="submit"] { background: var(--accent-s); color: #0f1117; }
+
+button:hover { opacity: .88; }
+
+/* ── Status ──────────────────────────────────────────────────────────────── */
+.status {
+  min-height: 20px;
+  font-size: .85rem;
+  font-weight: 500;
+  margin-top: 10px;
+  transition: all .2s;
+}
+.status.ok    { color: var(--ok); }
+.status.error { color: var(--danger); }
+
+/* ── Taula ────────────────────────────────────────────────────────────────── */
+.table-wrap {
+  overflow-x: auto;
+  padding: 20px 24px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .88rem;
+}
+
+thead th {
+  text-align: left;
+  font-size: .75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--muted);
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+tbody tr {
+  border-bottom: 1px solid rgba(42,48,80,.6);
+  transition: background .15s;
+}
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover { background: rgba(255,255,255,.03); }
+
+tbody td {
+  padding: 11px 12px;
+  vertical-align: middle;
+  color: var(--text);
+}
+
+td.empty {
+  text-align: center;
+  color: var(--muted);
+  padding: 24px;
+  font-style: italic;
+}
+
+/* Columna accions */
+td.actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+td.actions button {
+  padding: 6px 14px;
+  font-size: .8rem;
+}
+
+.btn-edit   { background: rgba(92,124,250,.18);  color: var(--accent-al); }
+.btn-edit:hover { background: rgba(92,124,250,.3); }
+
+.btn-delete { background: rgba(242,95,92,.15); color: var(--danger); }
+.btn-delete:hover { background: rgba(242,95,92,.3); }
+
+.btn-secondary { background: var(--surface-2); color: var(--muted); border: 1px solid var(--border); }
+.btn-secondary:hover { background: var(--border); }
+
+/* ── Modal ────────────────────────────────────────────────────────────────── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s;
+}
+
+.modal-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modal-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: var(--shadow);
+  transform: translateY(12px);
+  transition: transform .25s;
+}
+
+.modal-overlay.open .modal-box { transform: translateY(0); }
+
+.modal-box h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--accent-al);
+  margin-bottom: 16px;
+}
+
+.modal-box input {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.modal-actions {
   display: flex;
   gap: 10px;
-  flex-wrap: wrap;
-  align-items: end;
+  justify-content: flex-end;
 }
 
-form > *,
-.row > * {
-  flex: 1;
-  min-width: 160px;
-}
-
-label {
-  display: block;
-  margin-bottom: 4px;
-  font-size: 0.9rem;
-  color: var(--muted);
-}
-
-input,
-button {
-  width: 100%;
-  border-radius: 8px;
-  padding: 10px;
-  font-size: 0.95rem;
-  border: 1px solid var(--border);
-}
-
-button {
-  border: none;
-  cursor: pointer;
+.modal-actions button:first-child {
+  background: var(--accent-a);
   color: #fff;
-  background: var(--accent);
-  font-weight: 600;
 }
 
-button:hover {
-  background: var(--accent-dark);
+/* ── Footer ───────────────────────────────────────────────────────────────── */
+footer {
+  text-align: center;
+  padding: 20px;
+  color: var(--muted);
+  font-size: .8rem;
+  border-top: 1px solid var(--border);
+  font-family: var(--mono);
 }
 
-.btn-small {
-  max-width: 240px;
-}
-
-.status {
-  margin-top: 10px;
-  min-height: 24px;
-  font-size: 0.95rem;
-  font-weight: 600;
-}
-
-.status.ok {
-  color: var(--ok);
-}
-
-.status.error {
-  color: var(--danger);
-}
-
-#artist-output {
-  margin-top: 12px;
-  padding: 10px;
-  border-radius: 8px;
-  background: #f8fafc;
-  border: 1px solid var(--border);
+/* ── Responsiu ────────────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  main { padding: 0 12px; margin: 16px auto; }
+  .inline-form { flex-direction: column; }
+  input[type="text"], select, button { width: 100%; }
+  td.actions { flex-direction: column; }
 }

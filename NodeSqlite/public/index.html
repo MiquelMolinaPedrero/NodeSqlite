@@ -3,38 +3,158 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Node + SQLite3 (Artistes)</title>
+  <title>Gestió Musical · Node + SQLite</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <main>
-    <section class="card">
-      <h1>Exemple b�sic: SQLite3 amb Node</h1>
-      <p>Aquest exemple nom�s treballa amb artistes.</p>
-      <p>Si la base de dades est� buida, es creen dos artistes inicials.</p>
-    </section>
 
-    <section class="card">
-      <h2>1) Afegir artista</h2>
-      <form id="artist-form">
-        <div>
-          <label for="artist-name">Nom de l'artista</label>
-          <input id="artist-name" name="name" required />
-        </div>
-        <div>
-          <button type="submit">Desar</button>
-        </div>
-      </form>
-    </section>
-
-    <section class="card">
-      <h2>2) Consultar artistes</h2>
-      <div class="row">
-        <button id="load-btn" type="button" class="btn-small">Carregar artistes</button>
+  <!-- Modal editar artista -->
+  <div id="edit-modal" class="modal-overlay">
+    <div class="modal-box">
+      <h3>Editar artista</h3>
+      <input id="edit-artist-name" type="text" placeholder="Nou nom…" />
+      <div class="modal-actions">
+        <button id="edit-save-btn">Desar canvis</button>
+        <button id="edit-cancel-btn" class="btn-secondary">Cancel·lar</button>
       </div>
-      <p id="artist-output">Prem "Carregar artistes" per veure dades.</p>
+    </div>
+  </div>
+
+  <header>
+    <div class="header-inner">
+      <span class="logo">🎵</span>
+      <div>
+        <h1>Gestió Musical</h1>
+        <p class="subtitle">Node.js · Express · SQLite3</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ══════════════════════════════════════════════
+         SECCIÓ 1 · ARTISTES
+    ══════════════════════════════════════════════ -->
+    <section class="card" id="sec-artists">
+      <div class="card-header artists">
+        <span class="section-icon">🎤</span>
+        <h2>Artistes</h2>
+      </div>
+
+      <!-- Formulari afegir -->
+      <div class="form-block">
+        <h3>Afegir artista</h3>
+        <form id="artist-form" class="inline-form">
+          <input id="artist-name" type="text" placeholder="Nom de l'artista…" required />
+          <button type="submit">Afegir</button>
+        </form>
+        <p id="artist-status" class="status"></p>
+      </div>
+
+      <!-- Taula -->
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nom</th>
+              <th>Accions</th>
+            </tr>
+          </thead>
+          <tbody id="artist-tbody">
+            <tr><td colspan="3" class="empty">Carregant…</td></tr>
+          </tbody>
+        </table>
+      </div>
     </section>
+
+    <!-- ══════════════════════════════════════════════
+         SECCIÓ 2 · ÀLBUMS
+    ══════════════════════════════════════════════ -->
+    <section class="card" id="sec-albums">
+      <div class="card-header albums">
+        <span class="section-icon">💿</span>
+        <h2>Àlbums</h2>
+      </div>
+
+      <!-- Formulari afegir -->
+      <div class="form-block">
+        <h3>Afegir àlbum</h3>
+        <form id="album-form" class="inline-form">
+          <input id="album-title" type="text" placeholder="Títol de l'àlbum…" required />
+          <select id="album-artist">
+            <option value="">— Selecciona artista —</option>
+          </select>
+          <button type="submit">Afegir</button>
+        </form>
+        <p id="album-status" class="status"></p>
+      </div>
+
+      <!-- Taula -->
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Títol</th>
+              <th>Artista</th>
+              <th>Accions</th>
+            </tr>
+          </thead>
+          <tbody id="album-tbody">
+            <tr><td colspan="4" class="empty">Carregant…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════
+         SECCIÓ 3 · CANÇONS
+    ══════════════════════════════════════════════ -->
+    <section class="card" id="sec-songs">
+      <div class="card-header songs">
+        <span class="section-icon">🎵</span>
+        <h2>Cançons</h2>
+      </div>
+
+      <!-- Formulari afegir -->
+      <div class="form-block">
+        <h3>Afegir cançó</h3>
+        <form id="song-form" class="inline-form">
+          <input id="song-title" type="text" placeholder="Títol de la cançó…" required />
+          <select id="song-album">
+            <option value="">— Selecciona àlbum —</option>
+          </select>
+          <button type="submit">Afegir</button>
+        </form>
+        <p id="song-status" class="status"></p>
+      </div>
+
+      <!-- Taula -->
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Títol</th>
+              <th>Àlbum</th>
+              <th>Artista</th>
+              <th>Accions</th>
+            </tr>
+          </thead>
+          <tbody id="song-tbody">
+            <tr><td colspan="5" class="empty">Carregant…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
   </main>
+
+  <footer>
+    <p>RA6 · Accés a dades · Institut TIC de Barcelona</p>
+    <p style="font-size: 0.8em; opacity: 0.7; margin-top: 8px;">Desenvolupat per Miquel Molina</p>
+  </footer>
 
   <script src="app.js"></script>
 </body>
