@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Node + SQLite3 (Artistes)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main>
+    <section class="card">
+      <h1>Exemple b�sic: SQLite3 amb Node</h1>
+      <p>Aquest exemple nom�s treballa amb artistes.</p>
+      <p>Si la base de dades est� buida, es creen dos artistes inicials.</p>
+    </section>
+
+    <section class="card">
+      <h2>1) Afegir artista</h2>
+      <form id="artist-form">
+        <div>
+          <label for="artist-name">Nom de l'artista</label>
+          <input id="artist-name" name="name" required />
+        </div>
+        <div>
+          <button type="submit">Desar</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>2) Consultar artistes</h2>
+      <div class="row">
+        <button id="load-btn" type="button" class="btn-small">Carregar artistes</button>
+      </div>
+      <p id="artist-output">Prem "Carregar artistes" per veure dades.</p>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
